@@ -1,0 +1,283 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import {
+  Container, Box, Typography, Button,
+  TextField, IconButton, Chip, CircularProgress,
+  Table, TableBody, TableCell, TableContainer, TableHead,
+  TableRow, TablePagination, Paper, Dialog, DialogTitle,
+  DialogContent, DialogActions
+} from '@mui/material';
+import {
+  Add, Search, Edit, Delete, School,
+  CheckCircle, Cancel
+} from '@mui/icons-material';
+import Layout from '../components/Layout';
+import { isAuthenticated } from '../utils/auth';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+export default function Students() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [students, setStudents] = useState([]);
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [studentToDelete, setStudentToDelete] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const auth = isAuthenticated();
+    if (!auth) {
+      router.push('/login');
+      return;
+    }
+
+    setUser(auth.user);
+    fetchStudents();
+  }, [router, page, rowsPerPage]);
+
+  const fetchStudents = async () => {
+    try {
+      setLoading(true);
+      const auth = isAuthenticated();
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/students?page=${page + 1}&limit=${rowsPerPage}${searchTerm ? `&search=${searchTerm}` : ''}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        }
+      );
+
+      if (response.data.success) {
+        setStudents(response.data.data);
+        setTotalStudents(response.data.total);
+      }
+    } catch (err) {
+      setError('Failed to fetch students');
+      toast.error('Error loading student data');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = () => {
+    setPage(0);
+    fetchStudents();
+  };
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const openDeleteDialog = (student) => {
+    setStudentToDelete(student);
+    setDeleteDialogOpen(true);
+  };
+
+  const deleteStudent = async () => {
+    try {
+      const auth = isAuthenticated();
+
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/${studentToDelete._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        }
+      );
+
+      if (response.data.success) {
+        toast.success('Student deleted successfully');
+        fetchStudents();
+      }
+    } catch (err) {
+      setError('Failed to delete student');
+      toast.error('Error deleting student');
+      console.error(err);
+    } finally {
+      setDeleteDialogOpen(false);
+      setStudentToDelete(null);
+    }
+  };
+
+  return (
+    <Layout>
+      <Head>
+        <title>Students | School Attendance System</title>
+      </Head>
+
+      <Container maxWidth="lg">
+        <Box sx={{ my: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <Typography variant="h4" component="h1">
+              Students
+            </Typography>
+          </Box>
+
+          <Paper elevation={3}>
+            <Box sx={{ p: 3, borderBottom: '1px solid #e0e0e0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+              <TextField
+                size="small"
+                placeholder="Search Student"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') handleSearch()
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleSearch}>
+                      <Search />
+                    </IconButton>
+                  )
+                }}
+              />
+              {(user?.role === 'admin' || user?.role === 'teacher') && (
+                <Button
+                  variant="contained"
+                  startIcon={<Add />}
+                  onClick={() => router.push('/register-student')}
+                  size="small"
+                >
+                  Add New Student
+                </Button>
+              )}
+            </Box>
+
+            {loading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Student ID</TableCell>
+                        <TableCell>RFID Tag</TableCell>
+                        <TableCell>Class</TableCell>
+                        <TableCell>Grade</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell align="right">Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {students.length > 0 ? (
+                        students.map((student) => (
+                          <TableRow key={student._id}>
+                            <TableCell>{student.name}</TableCell>
+                            <TableCell>{student.studentId}</TableCell>
+                            <TableCell>{student.rfidTag}</TableCell>
+                            <TableCell>{student.class}</TableCell>
+                            <TableCell>{student.grade}</TableCell>
+                            <TableCell>
+                              {student.active ? (
+                                <Chip
+                                  icon={<CheckCircle fontSize="small" />}
+                                  label="Active"
+                                  color="success"
+                                  size="small"
+                                />
+                              ) : (
+                                <Chip
+                                  icon={<Cancel fontSize="small" />}
+                                  label="Inactive"
+                                  color="error"
+                                  size="small"
+                                />
+                              )}
+                            </TableCell>
+                            <TableCell align="right">
+                              <IconButton
+                                color="primary"
+                                onClick={() => router.push(`/students/${student._id}`)}
+                                size="small"
+                              >
+                                <School />
+                              </IconButton>
+                              {(user?.role === 'admin' || user?.role === 'teacher') && (
+                                <>
+                                  <IconButton
+                                    color="info"
+                                    onClick={() => router.push(`/edit-student/${student._id}`)}
+                                    size="small"
+                                  >
+                                    <Edit />
+                                  </IconButton>
+                                  {user?.role === 'admin' && (
+                                    <IconButton
+                                      color="error"
+                                      onClick={() => openDeleteDialog(student)}
+                                      size="small"
+                                    >
+                                      <Delete />
+                                    </IconButton>
+                                  )}
+                                </>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={7} align="center">
+                            No students found
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={totalStudents}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </>
+            )}
+          </Paper>
+        </Box>
+      </Container>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete the student: <strong>{studentToDelete?.name}</strong>?
+          </Typography>
+          <Typography color="error" sx={{ mt: 2 }}>
+            This action cannot be undone.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button onClick={deleteStudent} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Layout>
+  );
+}
