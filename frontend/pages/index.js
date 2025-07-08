@@ -62,28 +62,28 @@ export default function Home() {
     {
       title: 'Attendance',
       description: "View today's attendance and track real-time check-ins.",
-      icon: <QrCodeScanner sx={{ fontSize: 60, color: 'primary.main' }} />,
+      icon: <QrCodeScanner sx={{ fontSize: 60 }} />,
       link: '/attendance',
       bgcolor: 'primary.light'
     },
     {
       title: 'Students',
       description: "Manage student records and update details easily.",
-      icon: <Person sx={{ fontSize: 60, color: 'success.main' }} />,
+      icon: <Person sx={{ fontSize: 60}} />,
       link: '/students',
       bgcolor: 'success.light'
     },
     {
       title: 'Reports',
       description: "View and export detailed attendance reports.",
-      icon: <Assessment sx={{ fontSize: 60, color: 'warning.main' }} />,
+      icon: <Assessment sx={{ fontSize: 60 }} />,
       link: '/reports',
       bgcolor: 'warning.light'
     },
     {
       title: 'Devices',
       description: "Manage and monitor connected RFID devices.",
-      icon: <DevicesOther sx={{ fontSize: 60, color: 'error.main' }} />,
+      icon: <DevicesOther sx={{ fontSize: 60}} />,
       link: '/devices',
       bgcolor: 'error.light'
     },
@@ -93,7 +93,7 @@ export default function Home() {
     cards.push({
       title: 'Register',
       description: "Add new students to the system.",
-      icon: <PersonAdd sx={{ fontSize: 60, color: 'info.main' }} />,
+      icon: <PersonAdd sx={{ fontSize: 60}} />,
       link: '/register-student',
       bgcolor: 'info.light'
     });
