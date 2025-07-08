@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { 
-  AppBar, Toolbar, Typography, Box, Drawer, 
-  List, ListItem, ListItemIcon, ListItemText, 
-  Divider, IconButton, Avatar, Tooltip, Menu, 
-  MenuItem, Container, Badge
+import {
+  AppBar, Toolbar, Typography, Box, Drawer,
+  List, ListItem, ListItemIcon, ListItemText,
+  Divider, IconButton, Avatar, Tooltip, Menu,
+  MenuItem, useMediaQuery
 } from '@mui/material';
-import { 
-  Menu as MenuIcon, 
-  Dashboard, 
-  Person, 
-  Assessment, 
-  School, 
+import {
+  Menu as MenuIcon,
+  Dashboard,
+  Person,
+  Assessment,
+  School,
   QrCodeScanner,
   Logout,
   PersonAdd,
   DevicesOther
 } from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { isAuthenticated } from '../utils/auth';
 import toast from 'react-hot-toast';
 
@@ -29,25 +29,27 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     marginLeft: 0,
     ...(open && {
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: drawerWidth,
-    }),
-  }),
+      marginLeft: drawerWidth
+    })
+  })
 );
 
 export default function Layout({ children }) {
   const router = useRouter();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [drawerOpen, setDrawerOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const auth = isAuthenticated();
     if (auth) {
@@ -82,48 +84,54 @@ export default function Layout({ children }) {
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Attendance',
+      text: 'Kehadiran',
       icon: <QrCodeScanner />,
       path: '/attendance',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Students',
+      text: 'Siswa',
       icon: <Person />,
       path: '/students',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Devices',
+      text: 'Perangkat',
       icon: <DevicesOther />,
       path: '/devices',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Reports',
+      text: 'Laporan',
       icon: <Assessment />,
       path: '/reports',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Register Student',
+      text: 'Registrasi Siswa',
       icon: <PersonAdd />,
       path: '/register-student',
       roles: ['admin', 'teacher']
-    },
+    }
   ];
 
-  if (!user) {
-    return <Box>{children}</Box>;
-  }
+  if (!user) return <Box>{children}</Box>;
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar
+        position="fixed"
+        elevation={1}
+        sx={{
+          backgroundColor: '#fff',
+          color: '#111',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+          zIndex: (theme) => theme.zIndex.drawer + 1
+        }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2 }}
@@ -131,10 +139,8 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            School Attendance System
+            Sistem Absensi Sekolah
           </Typography>
-          
-          {/* User menu */}
           <Tooltip title="Account settings">
             <IconButton onClick={handleMenuOpen} color="inherit">
               <Avatar sx={{ bgcolor: 'secondary.main' }}>
@@ -148,18 +154,18 @@ export default function Layout({ children }) {
             onClose={handleMenuClose}
             onClick={handleMenuClose}
             PaperProps={{
-              elevation: 0,
+              elevation: 4,
               sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
                 '& .MuiAvatar-root': {
                   width: 32,
                   height: 32,
                   ml: -0.5,
-                  mr: 1,
+                  mr: 1
                 },
-              },
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.15))'
+              }
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -168,7 +174,7 @@ export default function Layout({ children }) {
               <ListItemIcon>
                 <School fontSize="small" />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary={user?.name}
                 secondary={user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
               />
@@ -178,24 +184,21 @@ export default function Layout({ children }) {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Logout
+              Keluar
             </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
-      
+
       <Drawer
-        variant="temporary"
+        variant={isMobile ? 'temporary' : 'persistent'}
         open={drawerOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile
-        }}
         sx={{
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
-            width: drawerWidth 
-          },
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box'
+          }
         }}
       >
         <Toolbar />
@@ -203,8 +206,8 @@ export default function Layout({ children }) {
           <List>
             {menuItems.map((item) => (
               item.roles.includes(user.role) && (
-                <ListItem 
-                  button 
+                <ListItem
+                  button
                   key={item.text}
                   onClick={() => {
                     router.push(item.path);
@@ -212,30 +215,19 @@ export default function Layout({ children }) {
                   }}
                   selected={router.pathname === item.path}
                 >
-                  <ListItemIcon>
-                    {item.icon}
-                  </ListItemIcon>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
                 </ListItem>
               )
             ))}
           </List>
-          <Divider />
-          <List>
-            <ListItem button onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItem>
-          </List>
         </Box>
       </Drawer>
-      
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+
+      <Main open={drawerOpen}>
         <Toolbar />
         {children}
-      </Box>
+      </Main>
     </Box>
   );
 }

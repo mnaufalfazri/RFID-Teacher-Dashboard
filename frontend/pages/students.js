@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import {
   Add, Search, Edit, Delete, School,
-  CheckCircle, Cancel
+  CheckCircle, Cancel, ArrowBack
 } from '@mui/icons-material';
 import Layout from '../components/Layout';
 import { isAuthenticated } from '../utils/auth';
@@ -124,8 +124,15 @@ export default function Students() {
         <Box sx={{ my: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
             <Typography variant="h4" component="h1">
-              Students
+              Siswa
             </Typography>
+            <Button 
+                  variant="outlined" 
+                  startIcon={<ArrowBack />}
+                  onClick={() => router.push('/')}
+                  >
+                  Kembali ke Dashboard
+            </Button>
           </Box>
 
           <Paper elevation={3}>
@@ -153,7 +160,7 @@ export default function Students() {
                   onClick={() => router.push('/register-student')}
                   size="small"
                 >
-                  Add New Student
+                  Tambah Siswa Baru
                 </Button>
               )}
             </Box>
@@ -168,13 +175,13 @@ export default function Students() {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Student ID</TableCell>
-                        <TableCell>RFID Tag</TableCell>
-                        <TableCell>Class</TableCell>
-                        <TableCell>Grade</TableCell>
+                        <TableCell>Nama</TableCell>
+                        <TableCell>ID Siswa</TableCell>
+                        <TableCell>Tag RFID</TableCell>
+                        <TableCell>Kelas</TableCell>
+                        <TableCell>Tingkat</TableCell>
                         <TableCell>Status</TableCell>
-                        <TableCell align="right">Actions</TableCell>
+                        <TableCell align="right">Aksi</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -190,14 +197,14 @@ export default function Students() {
                               {student.active ? (
                                 <Chip
                                   icon={<CheckCircle fontSize="small" />}
-                                  label="Active"
+                                  label="Aktif"
                                   color="success"
                                   size="small"
                                 />
                               ) : (
                                 <Chip
                                   icon={<Cancel fontSize="small" />}
-                                  label="Inactive"
+                                  label="Tidak Aktif"
                                   color="error"
                                   size="small"
                                 />
@@ -237,7 +244,7 @@ export default function Students() {
                       ) : (
                         <TableRow>
                           <TableCell colSpan={7} align="center">
-                            No students found
+                            Tidak ada siswa
                           </TableCell>
                         </TableRow>
                       )}

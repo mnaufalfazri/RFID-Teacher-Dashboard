@@ -120,10 +120,10 @@ export default function Home() {
       >
         <Box sx={{ my: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Welcome, {user?.name}!
+            Selamat Datang, {user?.name}!
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            School Attendance System with RFID Integration
+            Sistem Kehadiran Sekolah dengan Integrasi RFID
           </Typography>
 
           {/* Menu Cards */}
@@ -192,7 +192,7 @@ export default function Home() {
           {/* Devices List Title */}
           <Box sx={{ mt: 6 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-              Devices List
+              Daftar Perangkat 
             </Typography>
 
             {/* Summary Cards under Devices List title */}
@@ -200,7 +200,7 @@ export default function Home() {
               <Grid item xs={12} sm={4}>
                 <Paper sx={{ p: 2, textAlign: 'center' }}>
                   <Typography variant="h4">{totalDevices}</Typography>
-                  <Typography variant="subtitle1">Total Devices</Typography>
+                  <Typography variant="subtitle1">Total Perangkat</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -212,7 +212,7 @@ export default function Home() {
               <Grid item xs={12} sm={4}>
                 <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'error.main', color: 'white' }}>
                   <Typography variant="h4">{issuesDevices}</Typography>
-                  <Typography variant="subtitle1">Issues</Typography>
+                  <Typography variant="subtitle1">Bermasalah</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -228,9 +228,9 @@ export default function Home() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Device Name</TableCell>
+                      <TableCell>Nama Perangkat</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Description</TableCell>
+                      <TableCell>Deskripsi</TableCell>
                       <TableCell>IP</TableCell>
                       <TableCell>Uptime</TableCell>
                       <TableCell>Cached Records</TableCell>
