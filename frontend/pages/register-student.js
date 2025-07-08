@@ -28,9 +28,9 @@ import toast from "react-hot-toast"
 
 // Steps definition updated to include descriptions for the visual indicator
 const steps = [
-  { title: "Personal Information", description: "Enter Your Personal Details" },
-  { title: "Academic Information", description: "Provide Your Academic Records" },
-  { title: "Contact Information", description: "Input Your Contact Details" },
+  { title: "Informasi Pribadi", description: "Masukkan Detail Pribadi Siswa" },
+  { title: "Informasi Akademik", description: "Masukkan Data Akademik Siswa" },
+  { title: "Informasi Kontak", description: "Masukkan Detail Kontak Siswa" },
 ]
 
 export default function RegisterStudent() {
@@ -362,14 +362,14 @@ export default function RegisterStudent() {
                       fontSize: { xs: "1.1rem", md: "1.25rem" },
                     }}
                   >
-                    Personal Information
+                    Informasi Pribadi
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <TextField
                         required
                         fullWidth
-                        label="Full Name"
+                        label="Nama Lengkap"
                         {...register("name", {
                           required: "Name is required",
                           maxLength: {
@@ -385,7 +385,7 @@ export default function RegisterStudent() {
                       <TextField
                         required
                         fullWidth
-                        label="Student ID"
+                        label="ID Siswa"
                         {...register("studentId", {
                           required: "Student ID is required",
                         })}
@@ -407,15 +407,15 @@ export default function RegisterStudent() {
                         error={Boolean(errors.gender)}
                         helperText={errors.gender?.message}
                       >
-                        <MenuItem value="male">Male</MenuItem>
-                        <MenuItem value="female">Female</MenuItem>
-                        <MenuItem value="other">Other</MenuItem>
+                        <MenuItem value="male">Laki-laki</MenuItem>
+                        <MenuItem value="female">Perempuan</MenuItem>
+                        <MenuItem value="other">Lainnya</MenuItem>
                       </TextField>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
-                        label="Date of Birth"
+                        label="Tanggal Lahir"
                         type="date"
                         InputLabelProps={{ shrink: true }}
                         {...register("dateOfBirth")}
@@ -425,10 +425,10 @@ export default function RegisterStudent() {
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        label="RFID Tag Number"
-                        {...register("rfidTag", { required: "RFID Tag is required" })}
+                        label="Tag RFID"
+                        {...register("rfidTag", { required: "Tag RFID is required" })}
                         error={!!errors.rfidTag}
-                        helperText={errors.rfidTag ? errors.rfidTag.message : "Scan RFID card on device to auto-fill"}
+                        helperText={errors.rfidTag ? errors.rfidTag.message : "Scan kartu RFID untuk mengisi secara otomatis"}
                         margin="normal"
                         variant="outlined"
                         InputProps={{
@@ -468,16 +468,16 @@ export default function RegisterStudent() {
                       fontSize: { xs: "1.1rem", md: "1.25rem" },
                     }}
                   >
-                    Academic Information
+                    Informasi Akademik
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <TextField
                         required
                         fullWidth
-                        label="Class"
+                        label="Kelas"
                         {...register("class", {
-                          required: "Class is required",
+                          required: "Kelas is required",
                         })}
                         error={Boolean(errors.class)}
                         helperText={errors.class?.message}
@@ -487,9 +487,9 @@ export default function RegisterStudent() {
                       <TextField
                         required
                         fullWidth
-                        label="Grade"
+                        label="Tingkat"
                         {...register("grade", {
-                          required: "Grade is required",
+                          required: "Tingkat is required",
                         })}
                         error={Boolean(errors.grade)}
                         helperText={errors.grade?.message}
@@ -508,17 +508,17 @@ export default function RegisterStudent() {
                       fontSize: { xs: "1.1rem", md: "1.25rem" },
                     }}
                   >
-                    Contact Information
+                    Informasi Kontak
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
-                        label="Parent/Guardian Phone Number"
+                        label="Nomor Telepon Orang Tua/Wali"
                         {...register("parentContact", {
                           pattern: {
                             value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
-                            message: "Please enter a valid phone number",
+                            message: "Tolong masukkan nomor telepon yang valid",
                           },
                         })}
                         error={Boolean(errors.parentContact)}
@@ -526,7 +526,7 @@ export default function RegisterStudent() {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField fullWidth label="Address" multiline rows={2} {...register("address")} />
+                      <TextField fullWidth label="Alamat" multiline rows={2} {...register("address")} />
                     </Grid>
                   </Grid>
                 </>
@@ -552,7 +552,7 @@ export default function RegisterStudent() {
                       maxWidth: { sm: "120px" },
                     }}
                   >
-                    Previous
+                    Sebelumnya
                   </Button>
                 )}
 
@@ -568,7 +568,7 @@ export default function RegisterStudent() {
                       ml: { sm: "auto" },
                     }}
                   >
-                    Next
+                    Lanjut
                   </Button>
                 ) : (
                   <Button
@@ -584,7 +584,7 @@ export default function RegisterStudent() {
                       ml: { sm: "auto" },
                     }}
                   >
-                    {loading ? <CircularProgress size={24} /> : "Register Student"}
+                    {loading ? <CircularProgress size={24} /> : "Registrasi Siswa"}
                   </Button>
                 )}
               </Box>
