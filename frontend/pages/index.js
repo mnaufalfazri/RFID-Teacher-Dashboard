@@ -60,29 +60,29 @@ export default function Home() {
   // Cards Data
   const cards = [
     {
-      title: 'Attendance',
-      description: "View today's attendance and track real-time check-ins.",
+      title: 'Kehadiran',
+      description: "Lihat kehadiran hari ini dan track check-in secara real-time.",
       icon: <QrCodeScanner sx={{ fontSize: 60, color: 'primary.main' }} />,
       link: '/attendance',
       bgcolor: 'primary.light'
     },
     {
-      title: 'Students',
-      description: "Manage student records and update details easily.",
+      title: 'Siswa',
+      description: "Kelola data siswa dan perbarui detail dengan mudah.",
       icon: <Person sx={{ fontSize: 60, color: 'success.main' }} />,
       link: '/students',
       bgcolor: 'success.light'
     },
     {
-      title: 'Reports',
-      description: "View and export detailed attendance reports.",
+      title: 'Laporan',
+      description: "Lihat dan ekspor laporan kehadiran yang terperinci.",
       icon: <Assessment sx={{ fontSize: 60, color: 'warning.main' }} />,
       link: '/reports',
       bgcolor: 'warning.light'
     },
     {
-      title: 'Devices',
-      description: "Manage and monitor connected RFID devices.",
+      title: 'Perangkat',
+      description: "Kelola dan pantau perangkat RFID yang terhubung.",
       icon: <DevicesOther sx={{ fontSize: 60, color: 'error.main' }} />,
       link: '/devices',
       bgcolor: 'error.light'
@@ -91,8 +91,8 @@ export default function Home() {
 
   if (user?.role === 'admin') {
     cards.push({
-      title: 'Register',
-      description: "Add new students to the system.",
+      title: 'Registrasi',
+      description: "Tambahkan siswa baru ke dalam sistem.",
       icon: <PersonAdd sx={{ fontSize: 60, color: 'info.main' }} />,
       link: '/register-student',
       bgcolor: 'info.light'
@@ -120,10 +120,10 @@ export default function Home() {
       >
         <Box sx={{ my: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Welcome, {user?.name}!
+            Selamat Datang, {user?.name}!
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            School Attendance System with RFID Integration
+            Sistem Kehadiran Sekolah dengan Integrasi RFID
           </Typography>
 
           {/* Menu Cards */}
@@ -192,7 +192,7 @@ export default function Home() {
           {/* Devices List Title */}
           <Box sx={{ mt: 6 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-              Devices List
+              Daftar Perangkat 
             </Typography>
 
             {/* Summary Cards under Devices List title */}
@@ -200,7 +200,7 @@ export default function Home() {
               <Grid item xs={12} sm={4}>
                 <Paper sx={{ p: 2, textAlign: 'center' }}>
                   <Typography variant="h4">{totalDevices}</Typography>
-                  <Typography variant="subtitle1">Total Devices</Typography>
+                  <Typography variant="subtitle1">Total Perangkat</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -212,7 +212,7 @@ export default function Home() {
               <Grid item xs={12} sm={4}>
                 <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'error.main', color: 'white' }}>
                   <Typography variant="h4">{issuesDevices}</Typography>
-                  <Typography variant="subtitle1">Issues</Typography>
+                  <Typography variant="subtitle1">Bermasalah</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -228,9 +228,9 @@ export default function Home() {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Device Name</TableCell>
+                      <TableCell>Nama Perangkat</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Description</TableCell>
+                      <TableCell>Deskripsi</TableCell>
                       <TableCell>IP</TableCell>
                       <TableCell>Uptime</TableCell>
                       <TableCell>Cached Records</TableCell>
