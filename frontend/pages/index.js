@@ -60,29 +60,29 @@ export default function Home() {
   // Cards Data
   const cards = [
     {
-      title: 'Attendance',
-      description: "View today's attendance and track real-time check-ins.",
+      title: 'Kehadiran',
+      description: "Melihat Absensi Siswa Saat Ini.",
       icon: <QrCodeScanner sx={{ fontSize: 60 }} />,
       link: '/attendance',
       bgcolor: 'primary.light'
     },
     {
-      title: 'Students',
-      description: "Manage student records and update details easily.",
+      title: 'Siswa',
+      description: "Mengelola Data Siswa.",
       icon: <Person sx={{ fontSize: 60}} />,
       link: '/students',
       bgcolor: 'success.light'
     },
     {
-      title: 'Reports',
-      description: "View and export detailed attendance reports.",
+      title: 'Laporan',
+      description: "Melihat dan Mencetak Laporan Kehadiran.",
       icon: <Assessment sx={{ fontSize: 60 }} />,
       link: '/reports',
       bgcolor: 'warning.light'
     },
     {
-      title: 'Devices',
-      description: "Manage and monitor connected RFID devices.",
+      title: 'Perangkat',
+      description: "Mengatur dan Mengelola Perangkat RFID.",
       icon: <DevicesOther sx={{ fontSize: 60}} />,
       link: '/devices',
       bgcolor: 'error.light'
@@ -91,8 +91,8 @@ export default function Home() {
 
   if (user?.role === 'admin') {
     cards.push({
-      title: 'Register',
-      description: "Add new students to the system.",
+      title: 'Registrasi',
+      description: "Menambahkan Siswa Baru Ke Sistem.",
       icon: <PersonAdd sx={{ fontSize: 60}} />,
       link: '/register-student',
       bgcolor: 'info.light'
