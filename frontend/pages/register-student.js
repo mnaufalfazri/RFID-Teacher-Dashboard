@@ -212,7 +212,7 @@ export default function RegisterStudent() {
       <Head>
         <title>Register Student | School Attendance System</title>
       </Head>
-      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, my:-4 }}>
         <Box sx={{ my: { xs: 2, md: 4 } }}>
           {/* Step Indicator - Responsive design */}
           <Box
@@ -245,7 +245,6 @@ export default function RegisterStudent() {
                     borderRadius: "50%",
                     backgroundColor: index <= activeStep ?  "#1976D2" : "#E0E0E0",
                     color: index <= activeStep ? "white" : "black",
-                    // display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     fontWeight: "bold",
@@ -284,9 +283,9 @@ export default function RegisterStudent() {
                       display: { xs: "none", sm: "none", md: "block" },
                       width: "50px",
                       height: "2px",
-                      backgroundColor: index < activeStep ? "#6A0DAD" : "#E0E0E0",
+                      backgroundColor: index < activeStep ? "#1976D2" : "#E0E0E0",
                       mx: 2,
-                      my: 0,
+                      my: 5,
                     }}
                   />
                 )}
@@ -309,7 +308,7 @@ export default function RegisterStudent() {
               variant="h4"
               component="h1"
               sx={{
-                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.125rem" },
+                fontSize: { sm: "2rem", md: "2.125rem" },
               }}
             >
               {steps[activeStep].title}
@@ -321,6 +320,7 @@ export default function RegisterStudent() {
               sx={{
                 minWidth: { xs: "100%", sm: "auto" },
                 order: { xs: -1, sm: 0 },
+                display: {xs: "none", sm: "inline-flex"}
               }}
             >
               Back to Dashboard
