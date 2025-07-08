@@ -84,31 +84,31 @@ export default function Layout({ children }) {
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Attendance',
+      text: 'Kehadiran',
       icon: <QrCodeScanner />,
       path: '/attendance',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Students',
+      text: 'Murid',
       icon: <Person />,
       path: '/students',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Devices',
+      text: 'Perangkat',
       icon: <DevicesOther />,
       path: '/devices',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Reports',
+      text: 'Laporan',
       icon: <Assessment />,
       path: '/reports',
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Register Student',
+      text: 'Registrasi Murid',
       icon: <PersonAdd />,
       path: '/register-student',
       roles: ['admin', 'teacher']
@@ -139,7 +139,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            School Attendance System
+            Sistem Absensi Sekolah
           </Typography>
           <Tooltip title="Account settings">
             <IconButton onClick={handleMenuOpen} color="inherit">
@@ -184,7 +184,7 @@ export default function Layout({ children }) {
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
-              Logout
+              Keluar
             </MenuItem>
           </Menu>
         </Toolbar>
