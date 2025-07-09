@@ -96,22 +96,10 @@ export default function Layout({ children }) {
       roles: ['admin', 'teacher', 'staff']
     },
     {
-      text: 'Perangkat',
-      icon: <DevicesOther />,
-      path: '/devices',
-      roles: ['admin', 'teacher', 'staff']
-    },
-    {
       text: 'Laporan',
       icon: <Assessment />,
       path: '/reports',
       roles: ['admin', 'teacher', 'staff']
-    },
-    {
-      text: 'Registrasi Siswa',
-      icon: <PersonAdd />,
-      path: '/register-student',
-      roles: ['admin', 'teacher']
     }
   ];
 

@@ -79,26 +79,8 @@ export default function Home() {
       icon: <Assessment sx={{ fontSize: 60 }} />,
       link: '/reports',
       bgcolor: 'warning.light'
-    },
-    {
-      title: 'Perangkat',
-      description: "Mengatur dan Mengelola Perangkat RFID.",
-      icon: <DevicesOther sx={{ fontSize: 60}} />,
-      link: '/devices',
-      bgcolor: 'error.light'
-    },
+    }
   ];
-
-  if (user?.role === 'admin') {
-    cards.push({
-      title: 'Registrasi',
-      description: "Menambahkan Siswa Baru Ke Sistem.",
-      icon: <PersonAdd sx={{ fontSize: 60}} />,
-      link: '/register-student',
-      bgcolor: 'info.light'
-    });
-  }
-
   // Summary Counts
   const totalDevices = devices.length;
   const onlineDevices = devices.filter((d) => d.status === 'NORMAL').length;
@@ -188,82 +170,6 @@ export default function Home() {
               </Grid>
             ))}
           </Grid>
-
-          {/* Devices List Title */}
-          <Box sx={{ mt: 6 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Daftar Perangkat 
-            </Typography>
-
-            {/* Summary Cards under Devices List title */}
-            <Grid container spacing={2} sx={{ mb: 2 }}>
-              <Grid item xs={12} sm={4}>
-                <Paper sx={{ p: 2, textAlign: 'center' }}>
-                  <Typography variant="h4">{totalDevices}</Typography>
-                  <Typography variant="subtitle1">Total Perangkat</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'success.main', color: 'white' }}>
-                  <Typography variant="h4">{onlineDevices}</Typography>
-                  <Typography variant="subtitle1">Online</Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'error.main', color: 'white' }}>
-                  <Typography variant="h4">{issuesDevices}</Typography>
-                  <Typography variant="subtitle1">Bermasalah</Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-
-            {/* Devices Table */}
-            <Divider sx={{ mb: 2 }} />
-            {devicesLoading ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
-                <CircularProgress />
-              </Box>
-            ) : (
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Nama Perangkat</TableCell>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Deskripsi</TableCell>
-                      <TableCell>IP</TableCell>
-                      <TableCell>Uptime</TableCell>
-                      <TableCell>Cached Records</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {devices.map((device, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{device.deviceId || 'Unknown Device'}</TableCell>
-                        <TableCell>
-                          <Chip
-                            label={device.status || 'Unknown'}
-                            color={
-                              device.status === 'NORMAL'
-                                ? 'success'
-                                : device.status === 'TAMPERED'
-                                ? 'error'
-                                : 'default'
-                            }
-                            size="small"
-                          />
-                        </TableCell>
-                        <TableCell>{device.description || 'No description'}</TableCell>
-                        <TableCell>{device.ipAddress || 'No IP'}</TableCell>
-                        <TableCell>{device.uptime ? `${device.uptime} s` : 'Unknown'}</TableCell>
-                        <TableCell>{device.cacheSize || 0}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </Box>
         </Box>
       </Container>
     </Layout>
