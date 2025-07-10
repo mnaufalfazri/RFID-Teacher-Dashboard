@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import { isAuthenticated } from '../utils/auth';
 import Layout from '../components/Layout';
+import AutoFixHigh from '@mui/icons-material/AutoFixHigh';
 
 export default function Home() {
   const router = useRouter();
@@ -79,6 +80,13 @@ export default function Home() {
       icon: <Assessment sx={{ fontSize: 60 }} />,
       link: '/reports',
       bgcolor: 'warning.light'
+    },
+    {
+      title: 'Buat Soal',
+      description: "Membuat Soal Secara Otomatis.",
+      icon: <AutoFixHigh sx={{ fontSize: 60 }} />,
+      link: '/generate',
+      bgcolor: 'error.light'
     }
   ];
   // Summary Counts

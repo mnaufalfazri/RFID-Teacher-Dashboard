@@ -20,6 +20,8 @@ import {
 import { styled, useTheme } from '@mui/material/styles';
 import { isAuthenticated } from '../utils/auth';
 import toast from 'react-hot-toast';
+import AutoFixHigh from '@mui/icons-material/AutoFixHigh';
+
 
 const drawerWidth = 240;
 
@@ -99,6 +101,12 @@ export default function Layout({ children }) {
       text: 'Laporan',
       icon: <Assessment />,
       path: '/reports',
+      roles: ['admin', 'teacher', 'staff']
+    },
+    {
+      text: 'Buat Soal',
+      icon: <AutoFixHigh />,
+      path: '/generate',
       roles: ['admin', 'teacher', 'staff']
     }
   ];
